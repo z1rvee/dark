@@ -3,7 +3,7 @@
 #include "sys/mman.h"
 #include "../ESP/Tools.h"
 #import <AVFoundation/AVFoundation.h>
-#include "JRMemory.framework/Headers/MemScan.h"
+#include "../JRMemory.framework/Headers/MemScan.h"
 #include <stdio.h>
 #include <stdint.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
