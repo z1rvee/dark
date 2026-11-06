@@ -58,6 +58,19 @@ id<MTLTexture> M16Texture;
 id<MTLTexture> GrozaTexture;
 id<MTLTexture> AkmTexture;
 id<MTLTexture> SCARTexture;
+
+// ==========================================
+// LINKER XƏTASINI HƏLL ETMƏK ÜÇÜN METOD
+// ==========================================
+@interface mao (FixLinker)
+- (void)readFrameData:(ImVec2)a players:(std::vector<PlayerData>&)b materials:(std::vector<MaterialData>&)c;
+@end
+
+@implementation mao (FixLinker)
+- (void)readFrameData:(ImVec2)a players:(std::vector<PlayerData>&)b materials:(std::vector<MaterialData>&)c {
+    // Boş metod
+}
+@end
 id<MTLTexture> MK47Texture;
 id<MTLTexture> AUGTexture;
 id<MTLTexture> M762Texture;
