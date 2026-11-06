@@ -1,0 +1,9 @@
+Package: com.hero.engine
+Name: HERO
+Depends: firmware (>= 5.0), mobilesubstrate
+Version: 1.0
+Architecture: iphoneos-arm
+Description: 安装后注销生效！
+Maintainer: TG：Heronb521
+Author: @Hero
+Section: Tweaks
