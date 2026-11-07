@@ -26,18 +26,11 @@
 // METOD BURADAN BAŞLAYIR
 // ==========================================
 - (void)drawDrawWindow {
-    // 38-ci sətirdən başlayan kodunuz buradan davam edir.
-        if (self.moduleControl->playerSwitch.Kar98k) {
-            if (materialData.name=="Kar98k") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-}
-        if (self.moduleControl->playerSwitch.Mk14) {
-            if (materialData.name=="Mk14") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+    
+    // MaterialData dəyişənini təyin edən dövr (loop)
+    for (MaterialData materialData : materialDataList) {
+        
+        // 41-ci sətirdən başlayan kodunuz buradan davam edir...
                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
             }
 }
