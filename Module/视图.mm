@@ -23,11 +23,10 @@
 }
 
 // ==========================================
-// METODLAR BURADAN BAŞLAYIR
+// METOD BURADAN BAŞLAYIR
 // ==========================================
-
-// Sizin 83-cü sətirdən başlayan orijinal kodunuz buradan davam edir.
-}
+- (void)drawDrawWindow {
+    // Sizin 31-ci sətirdən başlayan kodunuz buradan davam edir.
         if (self.moduleControl->playerSwitch.SKS) {
             if (materialData.name=="SKS") {
                std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
