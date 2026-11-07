@@ -5,113 +5,39 @@
 #import "菜单.h"
 #import "../View/OverlayView.h"
 
+@interface mao ()
+@property (nonatomic, strong) ModuleControl *moduleControl;
+@end
+
 @implementation mao {
     std::vector<PlayerData> playerDataList;
     std::vector<MaterialData> materialDataList;
     
-    ImDrawList* imDrawList; // BU SƏTİRİ ƏLAVƏ ETDİK
+    ImDrawList* imDrawList;
     
-    int xWidth;
-    int xtWidth;
-    int hpWidth;
-    int hpHeight;
-    int hpHeight1;
-    int hpWidth1;
-    int hpHeight2;
+    int xWidth, xtWidth, hpWidth, hpHeight, hpHeight1, hpWidth1, hpHeight2;
+    int scWidth, scHeight, qtWidth, qtHeight, ZJWidth, ZJHeight, HPBest;
     
-    int scWidth;
-    int scHeight;
-    int qtWidth;
-    int qtHeight;
-    int ZJWidth;
-    int ZJHeight;
-    int HPBest;
-    
-    id<MTLTexture> leizhaTexture;
-    id<MTLTexture> hongzhaTexture;
-    id<MTLTexture> shouleiTexture;
-    id<MTLTexture> sldTexture;
-    id<MTLTexture> ywdTexture;
-    id<MTLTexture> rspTexture;
-    
-    id<MTLTexture> countTexture;
-    id<MTLTexture> count1Texture;
-    id<MTLTexture> count2Texture;
-    id<MTLTexture> count3Texture;
-    id<MTLTexture> count4Texture;
-    id<MTLTexture> count5Texture;
-    id<MTLTexture> quanTexture;
-    id<MTLTexture> playerTexture;
-    id<MTLTexture> robotTexture;
-    
-    id<MTLTexture> M416Texture;
-    id<MTLTexture> M16Texture;
-    id<MTLTexture> GrozaTexture;
-    id<MTLTexture> AkmTexture;
-    id<MTLTexture> SCARTexture;
-    
-    id<MTLTexture> MK47Texture;
-    id<MTLTexture> AUGTexture;
-    id<MTLTexture> M762Texture;
+    id<MTLTexture> leizhaTexture, hongzhaTexture, shouleiTexture, sldTexture, ywdTexture, rspTexture;
+    id<MTLTexture> countTexture, count1Texture, count2Texture, count3Texture, count4Texture, count5Texture, quanTexture, playerTexture, robotTexture;
+    id<MTLTexture> M416Texture, M16Texture, GrozaTexture, AkmTexture, SCARTexture;
+    id<MTLTexture> MK47Texture, AUGTexture, M762Texture;
     
     CGSize screenSize;
-    
-    // 56-cı sətirdəki mötərizə xətasını aradan qaldırmaq üçün
-    // burada heç bir əlavə { } olmamalıdır.
 }
-    //拉取一帧的数
-    readFrameData(ImVec2(screenSize.width / 2,screenSize.height / 2),playerDataList, materialDataList);
-    for (MaterialData materialData:materialDataList) {
-            //判断是否在屏幕内
-        if (self.moduleControl->playerSwitch.WZWZStatus) {
-                    if (materialData.name=="[预警]小心手雷") {//警告贴图
-                        imDrawList->AddImage((__bridge ImTextureID) leizhaTexture, ImVec2(screenSize.width / 2 - leizhaTexture.width / 2, 230), ImVec2(screenSize.width / 2 + leizhaTexture.width / 2, 230 + leizhaTexture.height), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-                    }
-                    if (materialData.name=="[轰炸预警]小心轰炸区") {
-                        imDrawList->AddImage((__bridge ImTextureID) hongzhaTexture, ImVec2(screenSize.width / 2 - hongzhaTexture.width / 2, 180), ImVec2(screenSize.width / 2 + hongzhaTexture.width / 2, 180 + hongzhaTexture.height), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-                    }
-                    if (materialData.name=="[预警]小心手雷") {
-                        imDrawList->AddImage((__bridge ImTextureID) sldTexture, ImVec2(materialData.screen.x+190 - qtWidth+1, materialData.screen.y-5 -  qtHeight+1), ImVec2(materialData.screen.x+190 - qtWidth+1 + qtHeight-2 , materialData.screen.y-5 - qtHeight + qtHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-                    }
-                    if (materialData.name=="[预警]烟雾弹") {
-                        imDrawList->AddImage((__bridge ImTextureID) ywdTexture, ImVec2(materialData.screen.x+190 - qtWidth+1, materialData.screen.y-5 -  qtHeight+1), ImVec2(materialData.screen.x+190 - qtWidth+1 + qtHeight-2 , materialData.screen.y-5 - qtHeight + qtHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-                    }
-                    if (materialData.name=="[预警]燃烧瓶") {
-                        imDrawList->AddImage((__bridge ImTextureID) rspTexture, ImVec2(materialData.screen.x+190 - qtWidth+1, materialData.screen.y-5 -  qtHeight+1), ImVec2(materialData.screen.x+190 - qtWidth+1 + qtHeight-2 , materialData.screen.y-5 - qtHeight + qtHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-                    }
-            //物品文字
-            if (materialData.distance != -100){
-                //载具
-            if (materialData.name=="摩托车") {
-                std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
 
-             }
-            if (materialData.name=="三轮摩托") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-               imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="小绵羊") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-               imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="蹦蹦") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-               imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="跑车") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="轿车") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+// ==========================================
+// BÜTÜN METODLARINIZ BURADAN BAŞLAYIR
+// (Sizin orijinal kodunuzda olan metodlar)
+// ==========================================
+
+// Nümunə olaraq drawDrawWindow metodu:
+- (void)drawDrawWindow {
+    // Əgər readFrameData çağırışı bu metodun içindədirsə, onu bura əlavə edin
+    // readFrameData(ImVec2(screenSize.width / 2, screenSize.height / 2), playerDataList, materialDataList);
+    
+    // ... sizin digər kodlarınız ...
+}
             }
             if (materialData.name=="吉普") {
                std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
