@@ -27,13 +27,11 @@
 // ==========================================
 - (void)drawDrawWindow {
     
-    // MaterialData dəyişənini təyin edən dövr (loop)
+    // MaterialData dövrü
     for (MaterialData materialData : materialDataList) {
         
-        // 41-ci sətirdən başlayan kodunuz buradan davam edir...
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-}
+        if (self.moduleControl->playerSwitch.Mini14) {
+            // 37-ci sətirdən başlayan digər if şərtləriniz buradan davam edir...
         if (self.moduleControl->playerSwitch.莫辛纳甘) {
             if (materialData.name=="莫辛纳甘") {
                std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
