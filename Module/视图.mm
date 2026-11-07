@@ -5,10 +5,6 @@
 #import "菜单.h"
 #import "../View/OverlayView.h"
 
-@interface mao ()
-@property (nonatomic, strong) ModuleControl *moduleControl;
-@end
-
 @implementation mao {
     std::vector<PlayerData> playerDataList;
     std::vector<MaterialData> materialDataList;
@@ -27,131 +23,10 @@
 }
 
 // ==========================================
-// BÜTÜN METODLARINIZ BURADAN BAŞLAYIR
-// (Sizin orijinal kodunuzda olan metodlar)
+// METODLAR BURADAN BAŞLAYIR
 // ==========================================
 
-// Nümunə olaraq drawDrawWindow metodu:
-- (void)drawDrawWindow {
-    // Əgər readFrameData çağırışı bu metodun içindədirsə, onu bura əlavə edin
-    // readFrameData(ImVec2(screenSize.width / 2, screenSize.height / 2), playerDataList, materialDataList);
-    
-    // ... sizin digər kodlarınız ...
-}
-            }
-            if (materialData.name=="吉普") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="大船") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="摩托艇") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="宝宝巴士") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="装甲车") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="吉普车") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="雪地摩托") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="雪地重型摩托") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="皮卡") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }
-            if (materialData.name=="双人跑车") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
-            }//车辆文字显示
-         //载具方框
-        if (self.moduleControl->playerSwitch.Vehiclebox) {
-DrawBox3D(imDrawList, materialData.objbox3d,ImColor(255,165,0),2.0f);
-}
-        //车辆耐久血条
-          if (self.moduleControl->playerSwitch.Vehiclehf) {
-                        //载具
-                        if (materialData.distance > 10 && materialData.VehicleHP >0){
-
-                            imDrawList->AddRectFilled({materialData.screen.x - 6 - ZJWidth, materialData.screen.y+28   - ZJHeight}, {materialData.screen.x - ZJWidth + (ZJWidth * 2) * materialData.VehicleHP / 100, materialData.screen.y+28 }, ImColor(220, 20, 60, 150), 10.0f);
-                            imDrawList->AddRectFilled({materialData.screen.x - 6 - ZJWidth, materialData.screen.y+37   - ZJHeight}, {materialData.screen.x - ZJWidth + (ZJWidth * 2) * materialData.VehicleFuel / 100, materialData.screen.y+37 }, ImColor(30, 144, 255, 180), 10.0f);
-                            imDrawList->AddRect({materialData.screen.x - 6 - ZJWidth, materialData.screen.y+28   - ZJHeight}, {materialData.screen.x - ZJWidth + (ZJWidth * 2) * materialData.VehicleHP / 100, materialData.screen.y+28 }, ImColor(255, 255, 255, 150), 10.0f, 0, 1.0f);
-                            imDrawList->AddRect({materialData.screen.x - 6 - ZJWidth, materialData.screen.y+37   - ZJHeight}, {materialData.screen.x - ZJWidth + (ZJWidth * 2) * materialData.VehicleFuel / 100, materialData.screen.y+37 }, ImColor(255, 255, 255, 150), 10.0f, 0, 1.0f);
-}
-}
-            //空投盒子
-            if (materialData.name=="[盒子]") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 255, 0), 21, str.c_str());
-        //盒子3D
-          if (self.moduleControl->playerSwitch.Airdropbox) {
-DrawBox3D(imDrawList, materialData.objbox3d,ImColor(91,206,200),2.0f);
-}
-            }
-        //盒子3D
-          if (self.moduleControl->playerSwitch.Airdropbox) {
-DrawBox3D(imDrawList, materialData.objbox3d,ImColor(91,206,200),2.0f);
-}
-            if (materialData.name=="盒子") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 255, 0), 21, str.c_str());
-            }
-            if (materialData.name=="[空投]") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 20, 147), 21, str.c_str());
-            }
-            if (materialData.name=="空投") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 20, 147), 21, str.c_str());
-            }
-            if (materialData.name=="信号枪") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 20, 147), 21, str.c_str());
-            }
-            //狙击枪
-        if (self.moduleControl->playerSwitch.QBU) {
-            if (materialData.name=="QBU") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-}
-        if (self.moduleControl->playerSwitch.SLR) {
-            if (materialData.name=="SLR") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
+// Sizin 83-cü sətirdən başlayan orijinal kodunuz buradan davam edir.
 }
         if (self.moduleControl->playerSwitch.SKS) {
             if (materialData.name=="SKS") {
