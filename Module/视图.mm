@@ -1,39 +1,28 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "SDK.hpp"
+#import "../Module/视图.h"
 #import "菜单.h"
 #import "../View/OverlayView.h"
-
-// ==========================================
-// DƏYİŞƏNLƏR VƏ TİPLƏR
-// ==========================================
-
-@interface mao : NSObject
-@end
 
 @implementation mao {
     std::vector<PlayerData> playerDataList;
     std::vector<MaterialData> materialDataList;
-    int xWidth = 50;
-    int xtWidth = 10;
-    int hpWidth = 100;
-    int hpHeight = 14;
-    int hpHeight1 = 30;
-    int hpWidth1 = 110;
-    int hpHeight2 = 30;
+    int xWidth;
+    int xtWidth;
+    int hpWidth;
+    int hpHeight;
+    int hpHeight1;
+    int hpWidth1;
+    int hpHeight2;
     
-    int scWidth = 220;
-    int scHeight = 110;
-    int qtWidth = 220;
-    int qtHeight = 50;
-    int ZJWidth = 40;
-    int ZJHeight = 6;
-    int HPBest = 100;
-    
-    //int xWidth = 50;
-    //int xtWidth = 10;
-    //int hpWidth = 110;
-    //int hpHeight = 4;
+    int scWidth;
+    int scHeight;
+    int qtWidth;
+    int qtHeight;
+    int ZJWidth;
+    int ZJHeight;
+    int HPBest;
     
     id<MTLTexture> leizhaTexture;
     id<MTLTexture> hongzhaTexture;
@@ -61,57 +50,9 @@
     id<MTLTexture> MK47Texture;
     id<MTLTexture> AUGTexture;
     id<MTLTexture> M762Texture;
+    
+    CGSize screenSize;
 }
-id<MTLTexture> BBTexture;
-id<MTLTexture> jcTexture;
-id<MTLTexture> mttTexture;
-id<MTLTexture> mtTexture;
-id<MTLTexture> myTexture;
-id<MTLTexture> R8Texture;
-id<MTLTexture> mt3Texture;
-
-id<MTLTexture> m416Texture;
-id<MTLTexture> akmTexture;
-id<MTLTexture> augTexture;
-id<MTLTexture> grozaTexture;
-id<MTLTexture> m16Texture;
-id<MTLTexture> m24Texture;
-id<MTLTexture> m249Texture;
-id<MTLTexture> m762Texture;
-id<MTLTexture> mg3Texture;
-id<MTLTexture> miniTexture;
-id<MTLTexture> mk14Texture;
-id<MTLTexture> mk47Texture;
-id<MTLTexture> scarTexture;
-id<MTLTexture> slrTexture;
-id<MTLTexture> awmTexture;
-id<MTLTexture> dp28Texture;
-id<MTLTexture> k98Texture;
-id<MTLTexture> vssTexture;
-id<MTLTexture> sksTexture;
-id<MTLTexture> hzTexture;
-
-id<MTLTexture> ylTexture;
-id<MTLTexture> jjbTexture;
-id<MTLTexture> ztyTexture;
-id<MTLTexture> ylxTexture;
-id<MTLTexture> zhenTexture;
-
-id<MTLTexture> b4Texture;
-id<MTLTexture> b3Texture;
-id<MTLTexture> b6Texture;
-id<MTLTexture> b8Texture;
-
-id<MTLTexture> ktTexture;
-id<MTLTexture> t3Texture;
-id<MTLTexture> j3Texture;
-id<MTLTexture> bb3Texture;
-
-id<MTLTexture> tleiTexture;
-id<MTLTexture> tyanTexture;
-id<MTLTexture> thuoTexture;
-
-static void DrawTextX(std::string text, ImVec2 pos,  int color, bool outline, float fontSize)
 {
     const char *str = text.c_str();
     ImVec2 vec2 = pos;
