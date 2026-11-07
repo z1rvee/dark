@@ -8,6 +8,9 @@
 @implementation mao {
     std::vector<PlayerData> playerDataList;
     std::vector<MaterialData> materialDataList;
+    
+    ImDrawList* imDrawList; // BU SƏTİRİ ƏLAVƏ ETDİK
+    
     int xWidth;
     int xtWidth;
     int hpWidth;
@@ -52,66 +55,10 @@
     id<MTLTexture> M762Texture;
     
     CGSize screenSize;
+    
+    // 56-cı sətirdəki mötərizə xətasını aradan qaldırmaq üçün
+    // burada heç bir əlavə { } olmamalıdır.
 }
-{
-    const char *str = text.c_str();
-    ImVec2 vec2 = pos;
-    
-    if (outline)
-    {
-        ImU32 outlineColor = 0xFF000000;
-        ImGui::GetWindowDrawList()->AddTextX(ImVec2(vec2.x + 1, vec2.y + 1), outlineColor, fontSize, str);
-        ImGui::GetWindowDrawList()->AddTextX(ImVec2(vec2.x - 1, vec2.y - 1), outlineColor, fontSize, str);
-        ImGui::GetWindowDrawList()->AddTextX(ImVec2(vec2.x + 1, vec2.y - 1), outlineColor, fontSize, str);
-        ImGui::GetWindowDrawList()->AddTextX(ImVec2(vec2.x - 1, vec2.y + 1), outlineColor, fontSize, str);
-    }
-    ImGui::GetWindowDrawList()->AddTextX(vec2, color, fontSize, str);
-}
-
-template<typename ... Args>
-static std::string string_format(const std::string& format, Args ... args){
-    
-    size_t size = 1 + snprintf(nullptr, 0, format.c_str(), args ...); // 计算格式化后的字符串长度
-    char bytes[size]; // 用于存储格式化后的字符串
-    snprintf(bytes, size, format.c_str(), args ...); // 格式化字符串并存储到 bytes 中
-    return std::string(bytes); // 将 bytes 转换成 string 类型并返回
-}
-void DrawBox3D(ImDrawList *draw,Box3D box3d, ImColor col, float thickness) {
-  
-    Line(draw,box3d.s1, box3d.s2, col,2.0f);
-    Line(draw,box3d.s2, box3d.s3, col,2.0f);
-    Line(draw,box3d.s3, box3d.s4, col,2.0f);
-    Line(draw,box3d.s4, box3d.s1, col,2.0f);
- 
-    Line(draw,box3d.s5, box3d.s6, col,2.0f);
-    Line(draw,box3d.s6, box3d.s7, col,2.0f);
-    Line(draw,box3d.s7, box3d.s8, col,2.0f);
-    Line(draw,box3d.s8, box3d.s5, col,2.0f);
- 
-    Line(draw,box3d.s1, box3d.s5, col,2.0f);
-    Line(draw,box3d.s2, box3d.s6, col,2.0f);
-    Line(draw,box3d.s3, box3d.s7, col,2.0f);
-    Line(draw,box3d.s4, box3d.s8, col,2.0f);
-
-}
-- (instancetype)initWithFrame:(ModuleControl*)control {
-    self = [super init];
-    
-    self.moduleControl = control;
-    
-    screenSize = [UIScreen mainScreen].bounds.size;
-    screenSize.width *= [UIScreen mainScreen].nativeScale;
-    screenSize.height *= [UIScreen mainScreen].nativeScale;
-    
-    return self;
-}
-
--(void)drawDrawWindow {
-    ImGui::SetNextWindowSize(ImVec2(screenSize.width,screenSize.height));
-    ImGui::SetNextWindowPos(ImVec2(0, 0));
-    ImGui::Begin("alpha", nullptr, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoMove);
-    
-    imDrawList = ImGui::GetWindowDrawList();
     //拉取一帧的数
     readFrameData(ImVec2(screenSize.width / 2,screenSize.height / 2),playerDataList, materialDataList);
     for (MaterialData materialData:materialDataList) {
