@@ -26,8 +26,7 @@
 // METOD BURADAN BAŞLAYIR
 // ==========================================
 - (void)drawDrawWindow {
-    // Sizin 31-ci sətirdən başlayan kodunuz buradan davam edir.
-        if (self.moduleControl->playerSwitch.SKS) {
+    // 31-ci sətirdən başlayan kodunuz buradan davam edir.
             if (materialData.name=="SKS") {
                std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
                 imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
