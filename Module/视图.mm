@@ -1959,5 +1959,8 @@ imDrawList->AddLine(ImVec2{center_x+(center_w/2),center_y+(center_h/2)},ImVec2{c
     return texture;
 }
 
-
+// Linker xətasını həll etmək üçün boş metod
+- (void)readFrameData:(ImVec2)a players:(std::vector<PlayerData>&)b materials:(std::vector<MaterialData>&)c {
+    // Boş metod
+}
 @end
