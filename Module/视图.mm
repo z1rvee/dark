@@ -1,117 +1,67 @@
-#include "../utils/module_tools.h"
-#import "视图.h"
-#include "../utils/image_base64.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "SDK.hpp"
+#import "菜单.h"
 #import "../View/OverlayView.h"
-//#import "Gzb.h"
-#define kWidth  [UIScreen mainScreen].bounds.size.width
-#define kHeight [UIScreen mainScreen].bounds.size.height
-#define screenHeight [UIScreen mainScreen].bounds.size.height
-#define screenWidth [UIScreen mainScreen].bounds.size.width
-@implementation mao
-ImDrawList *imDrawList;
-
-CGSize screenSize;
-
-std::vector<PlayerData> playerDataList;
-std::vector<MaterialData> materialDataList;
-int xWidth =50;
-int xtWidth =10;
-int hpWidth = 100;
-int hpHeight = 14;
-int hpHeight1 = 30;
-int hpWidth1 = 110;
-int hpHeight2 = 30;
-
-int scWidth = 220;
-int scHeight = 110;
-int qtWidth = 220;
-int qtHeight = 50;
-int ZJWidth = 40;
-int ZJHeight = 6;
-int HPBest = 100;
-
-//int xWidth =50;
-//int xtWidth =10;
-//int hpWidth = 110;
-//int hpHeight = 4;
-
-
-id<MTLTexture> leizhaTexture;
-id<MTLTexture> hongzhaTexture;
-id<MTLTexture> shouleiTexture;
-id<MTLTexture> sldTexture;
-id<MTLTexture> ywdTexture;
-id<MTLTexture> rspTexture;
-
-id<MTLTexture> countTexture;
-id<MTLTexture> count1Texture;
-id<MTLTexture> count2Texture;
-id<MTLTexture> count3Texture;
-id<MTLTexture> count4Texture;
-id<MTLTexture> count5Texture;
-id<MTLTexture> quanTexture;
-id<MTLTexture> playerTexture;
-id<MTLTexture> robotTexture;
-
-id<MTLTexture> M416Texture;
-id<MTLTexture> M16Texture;
-id<MTLTexture> GrozaTexture;
-id<MTLTexture> AkmTexture;
-id<MTLTexture> SCARTexture;
 
 // ==========================================
-// LINKER XƏTASINI HƏLL ETMƏK ÜÇÜN METOD
+// DƏYİŞƏNLƏR VƏ TİPLƏR
 // ==========================================
-@interface mao (FixLinker)
-- (void)readFrameData:(ImVec2)a players:(std::vector<PlayerData>&)b materials:(std::vector<MaterialData>&)c;
+
+@interface mao : NSObject
 @end
 
-@implementation mao (FixLinker)
-- (void)readFrameData:(ImVec2)a players:(std::vector<PlayerData>&)b materials:(std::vector<MaterialData>&)c {
-    // Boş metod
+@implementation mao {
+    std::vector<PlayerData> playerDataList;
+    std::vector<MaterialData> materialDataList;
+    int xWidth = 50;
+    int xtWidth = 10;
+    int hpWidth = 100;
+    int hpHeight = 14;
+    int hpHeight1 = 30;
+    int hpWidth1 = 110;
+    int hpHeight2 = 30;
+    
+    int scWidth = 220;
+    int scHeight = 110;
+    int qtWidth = 220;
+    int qtHeight = 50;
+    int ZJWidth = 40;
+    int ZJHeight = 6;
+    int HPBest = 100;
+    
+    //int xWidth = 50;
+    //int xtWidth = 10;
+    //int hpWidth = 110;
+    //int hpHeight = 4;
+    
+    id<MTLTexture> leizhaTexture;
+    id<MTLTexture> hongzhaTexture;
+    id<MTLTexture> shouleiTexture;
+    id<MTLTexture> sldTexture;
+    id<MTLTexture> ywdTexture;
+    id<MTLTexture> rspTexture;
+    
+    id<MTLTexture> countTexture;
+    id<MTLTexture> count1Texture;
+    id<MTLTexture> count2Texture;
+    id<MTLTexture> count3Texture;
+    id<MTLTexture> count4Texture;
+    id<MTLTexture> count5Texture;
+    id<MTLTexture> quanTexture;
+    id<MTLTexture> playerTexture;
+    id<MTLTexture> robotTexture;
+    
+    id<MTLTexture> M416Texture;
+    id<MTLTexture> M16Texture;
+    id<MTLTexture> GrozaTexture;
+    id<MTLTexture> AkmTexture;
+    id<MTLTexture> SCARTexture;
+    
+    id<MTLTexture> MK47Texture;
+    id<MTLTexture> AUGTexture;
+    id<MTLTexture> M762Texture;
 }
-@end
-id<MTLTexture> MK47Texture;
-id<MTLTexture> AUGTexture;
-id<MTLTexture> M762Texture;
-id<MTLTexture> QBZTexture;
-id<MTLTexture> leiTexture;
-id<MTLTexture> huoTexture;
-id<MTLTexture> yanTexture;
-id<MTLTexture> shanTexture;
-id<MTLTexture> R1895Texture;
-id<MTLTexture> P92Texture;
-id<MTLTexture> P1911Texture;
-id<MTLTexture> P18CTexture;
-id<MTLTexture> R45Texture;
-id<MTLTexture> SKSTexture;
-id<MTLTexture> MINITexture;
-id<MTLTexture> MK14Texture;
-id<MTLTexture> VSSTexture;
-id<MTLTexture> QBUTexture;
-id<MTLTexture> SLRTexture;
-id<MTLTexture> AWMTexture;
-id<MTLTexture> M24Texture;
-id<MTLTexture> K98Texture;
-id<MTLTexture> MOTexture;
-id<MTLTexture> LIANTexture;
-id<MTLTexture> GUNTexture;
-id<MTLTexture> DAOTexture;
-id<MTLTexture> GUOTexture;
-id<MTLTexture> UZITexture;
-id<MTLTexture> TANGTexture;
-id<MTLTexture> VKTTexture;
-id<MTLTexture> MP5KTexture;
-id<MTLTexture> UMP9Texture;
-id<MTLTexture> YNTexture;
-id<MTLTexture> DP28Texture;
-id<MTLTexture> MG3Texture;
-id<MTLTexture> M249Texture;
-id<MTLTexture> DBSTexture;
-id<MTLTexture> S686Texture;
-id<MTLTexture> S12KTexture;
-
-id<MTLTexture> JPTexture;
 id<MTLTexture> BBTexture;
 id<MTLTexture> jcTexture;
 id<MTLTexture> mttTexture;
