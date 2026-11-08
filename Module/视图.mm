@@ -1997,9 +1997,11 @@ imDrawList->AddLine(ImVec2{center_x+(center_w/2),center_y+(center_h/2)},ImVec2{c
     return texture;
 }
 
-// Linker xətasını həll etmək üçün boş funksiya tərifi
-void readFrameData(ImVec2 a, std::vector<PlayerData>& b, std::vector<MaterialData>& c) {
-    // Bu funksiya hələlik boşdur.
+// Oyunun yaddaşını oxumaq üçün funksiya
+void readFrameData(ImVec2 screenSize, std::vector<PlayerData> &playerDataList, std::vector<MaterialData> &materialDataList) {
+    // Burada JRMemoryEngine istifadə edilərək oyunun yaddaşı oxunmalıdır.
+    // Lakin bu funksiyanın tam kodunu bilmədiyimiz üçün, əvvəlcə boş buraxırıq.
+    // Daha sonra sizin orijinal kodunuzdakı funksiya ilə əvəz ediləcək.
 }
 
 @end
