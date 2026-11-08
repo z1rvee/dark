@@ -36,13 +36,12 @@ jobs:
         make clean || true
         make
 
-    - name: Find and Extract Dylib
+    - name: Copy Dylib to Root
       run: |
-        # Faylı tapıb birbaşa əsas qovluğa çıxarırıq
         find . -name "*.dylib" -exec cp {} ./ADMIN.dylib \;
         ls -la ADMIN.dylib
 
-    - name: Upload Dylib (No Zip)
+    - name: Upload Dylib Artifact
       uses: actions/upload-artifact@v4
       with:
         name: ADMIN-Dylib
