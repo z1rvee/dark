@@ -1,5 +1,5 @@
 # ==========================================
-# iOS Tweak Makefile (JRMemory Düzgün Link)
+# iOS Tweak Makefile (JRMemory Qovluq Düzəlişi)
 # ==========================================
 
 ARCHS = arm64
@@ -18,16 +18,13 @@ ADMIN_FILES = $(wildcard *.mm *.m *.cpp *.c) \
               $(wildcard Module/*.mm) \
               $(wildcard Module/*.m)
 
-# JRMemory-ni framework olaraq qoşuruq
-ADMIN_FRAMEWORKS = UIKit Foundation CoreGraphics QuartzCore Metal MetalKit JRMemory
+# Framework-lər (JRMemory SİLİNDİ)
+ADMIN_FRAMEWORKS = UIKit Foundation CoreGraphics QuartzCore Metal MetalKit
 
 ADMIN_LIBRARIES = c++ objc z
 
-# Framework-ün harada olduğunu göstəririk
-ADMIN_FRAMEWORK_PATH = $(THEOS_PROJECT_DIR)
-
-# Kompilyator ayarları
-ADMIN_CFLAGS = -fobjc-arc -I$(THEOS_PROJECT_DIR) -F$(THEOS_PROJECT_DIR) \
+# Kompilyator ayarları və JRMemory qovluğunun yolu
+ADMIN_CFLAGS = -fobjc-arc -I$(THEOS_PROJECT_DIR) -I$(THEOS_PROJECT_DIR)/JRMemory \
                -Wno-error -Wno-everything -Wno-deprecated-declarations \
                -Wno-nontrivial-memcall -Wno-return-stack-address \
                -Wno-int-to-pointer-cast -Wno-array-bounds \
