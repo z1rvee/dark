@@ -1,4 +1,4 @@
-name: Build iOS Dylib
+name: Build Dylib
 
 on:
   push:
@@ -13,17 +13,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup Theos and Tools
+    - name: Setup Theos
       run: |
         export THEOS=$HOME/theos
         if [ ! -d "$THEOS" ]; then
           git clone --recursive https://github.com/theos/theos.git $THEOS
         fi
         echo "THEOS=$THEOS" >> $GITHUB_ENV
-        
-        # Ldid-i birbaşa GitHub-dan yükləyirik (ən etibarlı üsul)
-        wget -q https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_macosx_arm64 -O /usr/local/bin/ldid
-        chmod +x /usr/local/bin/ldid
 
     - name: Download iOS SDK
       run: |
@@ -31,7 +27,7 @@ jobs:
           git clone --depth 1 https://github.com/theos/sdks.git $THEOS/sdks
         fi
 
-    - name: Compile Dylib Only
+    - name: Compile Dylib
       run: |
         make clean || true
         make
