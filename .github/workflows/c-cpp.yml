@@ -1,4 +1,4 @@
-name: Build iOS Tweak
+name: Build iOS Dylib
 
 on:
   push:
@@ -32,16 +32,13 @@ jobs:
           git clone --depth 1 https://github.com/theos/sdks.git $THEOS/sdks
         fi
 
-    - name: Compile Project
+    - name: Compile Dylib Only
       run: |
         make clean || true
-        make package FINALPACKAGE=1
+        make
 
-    - name: Upload Dylib and Deb Artifact
+    - name: Upload Dylib Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ADMIN-Build-Output
-        path: |
-          .theos/obj/arm64/ADMIN.dylib
-          packages/*.deb
-          .theos/obj/debug/arm64/ADMIN.dylib
+        name: ADMIN-Dylib
+        path: .theos/obj/arm64/ADMIN.dylib
