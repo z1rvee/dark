@@ -1,5 +1,5 @@
 # ==========================================
-# iOS Tweak Makefile (MemScan Yol Düzəlişi - Final)
+# iOS Tweak Makefile (JRMemory Tam Düzəliş)
 # ==========================================
 
 ARCHS = arm64
@@ -19,19 +19,26 @@ ADMIN_FILES = $(wildcard *.mm *.m *.cpp *.c) \
               $(wildcard Module/*.mm) \
               $(wildcard Module/*.m)
 
-# Framework-lər
-ADMIN_FRAMEWORKS = UIKit Foundation CoreGraphics QuartzCore Metal MetalKit
+# Framework-lər (JRMemory buradadır)
+ADMIN_FRAMEWORKS = UIKit Foundation CoreGraphics QuartzCore Metal MetalKit JRMemory
 
 ADMIN_LIBRARIES = c++ objc z
 
-# JRMemory.framework-ün içindəki Headers qovluğunu göstəririk
-ADMIN_CFLAGS = -fobjc-arc -I$(THEOS_PROJECT_DIR) -I$(THEOS_PROJECT_DIR)/JRMemory.framework/Headers \
+# Framework-ün harada olduğunu Theos-a göstəririk
+ADMIN_FRAMEWORK_PATH = $(THEOS_PROJECT_DIR)
+
+# Kompilyator ayarları (Xəta və Xəbərdarlıqları söndürürük)
+ADMIN_CFLAGS = -fobjc-arc -I$(THEOS_PROJECT_DIR) -F$(THEOS_PROJECT_DIR) \
                -Wno-error -Wno-everything -Wno-deprecated-declarations \
                -Wno-nontrivial-memcall -Wno-return-stack-address \
                -Wno-int-to-pointer-cast -Wno-array-bounds \
                -Wno-module-import-in-extern-c -Wno-unused-private-field
 
 ADMIN_CCFLAGS = -std=c++17 -fno-exceptions -fno-rtti
+
+# İmzalama problemini həll edirik (ldid xətası)
+ADMIN_CODESIGN_FLAGS = -S
+THEOS_STRIP_AFTER_CODESIGN = no
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
