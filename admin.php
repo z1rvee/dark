@@ -172,22 +172,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $now = time();
         $expire_time = $now + 86400;
-        $prefix = "DARKOS-1D-";
+        $prefix = "DARKIOS-1D-";
 
-        if ($duration_type == '1D') { $expire_time = $now + 86400; $prefix = "DARKOS-1D-"; }
-        elseif ($duration_type == '7D') { $expire_time = $now + (7 * 86400); $prefix = "DARKOS-7D-"; }
-        elseif ($duration_type == '30D') { $expire_time = $now + (30 * 86400); $prefix = "DARKOS-30D-"; }
-        elseif ($duration_type == 'LIFETIME') { $expire_time = 0; $prefix = "DARKOS-LIFETIME-"; }
+        if ($duration_type == '1D') { $expire_time = $now + 86400; $prefix = "DARKIOS-1D-"; }
+        elseif ($duration_type == '7D') { $expire_time = $now + (7 * 86400); $prefix = "DARKIOS-7D-"; }
+        elseif ($duration_type == '30D') { $expire_time = $now + (30 * 86400); $prefix = "DARKIOS-30D-"; }
+        elseif ($duration_type == 'LIFETIME') { $expire_time = 0; $prefix = "DARKIOS-LIFETIME-"; }
+        
         elseif ($duration_type == 'TEST_1D') { $expire_time = $now + 86400; $prefix = "DARKIOS-TESTERKEY-"; }
         elseif ($duration_type == 'TEST_7D') { $expire_time = $now + (7 * 86400); $prefix = "DARKIOS-TESTERKEY-"; }
         elseif ($duration_type == 'TEST_30D') { $expire_time = $now + (30 * 86400); $prefix = "DARKIOS-TESTERKEY-"; }
         elseif ($duration_type == 'TEST_LIFETIME') { $expire_time = 0; $prefix = "DARKIOS-TESTERKEY-"; }
 
-        if (strpos($duration_type, 'TEST_') !== false) {
-            $random_part = strtoupper(substr(bin2hex(random_bytes(6)), 0, 12));
-        } else {
-            $random_part = strtoupper(bin2hex(random_bytes(4)));
-        }
+        // 15 simvolluq qarışıq random hissə (hərf və rəqəm)
+        $random_part = strtoupper(substr(bin2hex(random_bytes(8)), 0, 15));
         
         $key = !empty($custom_key) ? $custom_key : $prefix . $random_part;
         $keys_data[$key] = [
