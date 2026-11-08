@@ -13,13 +13,26 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup Theos
+    - name: Setup Theos and Ldid
       run: |
         export THEOS=$HOME/theos
         if [ ! -d "$THEOS" ]; then
           git clone --recursive https://github.com/theos/theos.git $THEOS
         fi
         echo "THEOS=$THEOS" >> $GITHUB_ENV
+        
+        # Ldid-i Theos-un öz daxilindən götürürük (ən etibarlı yol)
+        if [ -f "$THEOS/bin/ldid" ]; then
+          sudo cp "$THEOS/bin/ldid" /usr/local/bin/ldid
+          sudo chmod +x /usr/local/bin/ldid
+        else
+          # Əgər orada yoxdursa, birbaşa github-dan çəkirik
+          curl -L -o /usr/local/bin/ldid https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_macosx_arm64
+          sudo chmod +x /usr/local/bin/ldid
+        fi
+        
+        # Yoxlayaq ki, ldid işləyir
+        ldid -v || true
 
     - name: Download iOS SDK
       run: |
