@@ -21,10 +21,8 @@ jobs:
         fi
         echo "THEOS=$THEOS" >> $GITHUB_ENV
         
-        # Ldid-i yükləyirik
-        curl -LO https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_macosx_arm64
-        sudo mv ldid_macosx_arm64 /usr/local/bin/ldid
-        sudo chmod +x /usr/local/bin/ldid
+        # Ldid-i Homebrew ilə yükləyirik (daha stabil)
+        brew install ldid || true
 
     - name: Download iOS SDK
       run: |
