@@ -14,10 +14,12 @@
     int xWidth, xtWidth, hpWidth, hpHeight, hpHeight1, hpWidth1, hpHeight2;
     int scWidth, scHeight, qtWidth, qtHeight, ZJWidth, ZJHeight, HPBest;
     
+    // BÜTÜN TEXTURE-LƏR (Xəta verənlər də daxil olmaqla)
     id<MTLTexture> leizhaTexture, hongzhaTexture, shouleiTexture, sldTexture, ywdTexture, rspTexture;
     id<MTLTexture> countTexture, count1Texture, count2Texture, count3Texture, count4Texture, count5Texture, quanTexture, playerTexture, robotTexture;
     id<MTLTexture> M416Texture, M16Texture, GrozaTexture, AkmTexture, SCARTexture;
     id<MTLTexture> MK47Texture, AUGTexture, M762Texture;
+    id<MTLTexture> JPTexture, BBTexture, jcTexture, mttTexture, mtTexture, myTexture, R8Texture, mt3Texture, m416Texture, akmTexture, augTexture, grozaTexture;
     
     CGSize screenSize;
 }
@@ -205,87 +207,6 @@
             if (materialData.name=="[预警]小心手雷") {
                 imDrawList->AddImage((__bridge ImTextureID) shouleiTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
             }
-            if (materialData.name=="吉普") {
-                imDrawList->AddImage((__bridge ImTextureID) JPTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="蹦蹦") {
-                imDrawList->AddImage((__bridge ImTextureID) BBTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="轿车") {
-                imDrawList->AddImage((__bridge ImTextureID) jcTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="摩托艇") {
-                imDrawList->AddImage((__bridge ImTextureID) mttTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="摩托车") {
-                imDrawList->AddImage((__bridge ImTextureID) mtTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="小绵羊") {
-                imDrawList->AddImage((__bridge ImTextureID) myTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="CoupeRB") {
-                imDrawList->AddImage((__bridge ImTextureID) R8Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="三轮摩托") {
-                imDrawList->AddImage((__bridge ImTextureID) mt3Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="M416") {
-                imDrawList->AddImage((__bridge ImTextureID) m416Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="AKM") {
-                imDrawList->AddImage((__bridge ImTextureID) akmTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="AUG") {
-                imDrawList->AddImage((__bridge ImTextureID) augTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="Groza") {
-                imDrawList->AddImage((__bridge ImTextureID) grozaTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-        }
-    } // <-- 2-ci DÖVRÜN SONU
-
-    // ==========================================
-    // 3-cü DÖVR (Silah qoşmaları üçün)
-    // ==========================================
-    for (MaterialData materialData : materialDataList) {
-        
-        if (materialData.name=="[狙配件]快速扩容") {
-            // Sizin 252-ci sətirdən başlayan kodunuz buradan davam edir...
-            if (materialData.name=="[配件]枪口补偿") {
-               std::string str = materialData.name;
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
-            }
-            if (materialData.name=="[配件]战术枪托") {
-               std::string str = materialData.name;
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
-            }
-            if (materialData.name=="[配件]消焰器") {
-               std::string str = materialData.name;
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
-            }
-            if (materialData.name=="[配件]消音器") {
-               std::string str = materialData.name;
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
-            }
-            if (materialData.name=="[配件]快速扩容") {
-               std::string str = materialData.name;
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
-            }
-            if (materialData.name=="[配件]扩容") {
-               std::string str = materialData.name;
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
-            }                
-          }
-        }
-//物品贴图
-if (self.moduleControl->playerSwitch.WZStatus) {
-if (materialData.name=="[预警]小心手雷") {
 imDrawList->AddImage((__bridge ImTextureID) shouleiTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
 }
 
