@@ -2,37 +2,46 @@ name: Build iOS Tweak
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
+  workflow_dispatch: 
 
 jobs:
   build:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Setup Theos Manually
-        run: |
-          if [ ! -d "$HOME/theos" ]; then
-            git clone --recursive https://github.com/theos/theos.git $HOME/theos
-          fi
-          
-          if [ ! -d "$HOME/theos/sdks" ]; then
-            git clone https://github.com/theos/sdks.git $HOME/theos/sdks
-          fi
-          
-          echo "THEOS=$HOME/theos" >> $GITHUB_ENV
-          echo "$HOME/theos/bin" >> $GITHUB_PATH
+    - name: Setup Theos and Tools
+      run: |
+        export THEOS=$HOME/theos
+        if [ ! -d "$THEOS" ]; then
+          git clone --recursive https://github.com/theos/theos.git $THEOS
+        fi
+        echo "THEOS=$THEOS" >> $GITHUB_ENV
+        
+        # Ldid-i yükləyirik
+        curl -LO https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_macosx_arm64
+        sudo mv ldid_macosx_arm64 /usr/local/bin/ldid
+        sudo chmod +x /usr/local/bin/ldid
 
-      - name: Install ldid
-        run: |
-          brew install ldid
+    - name: Download iOS SDK
+      run: |
+        if [ ! -d "$THEOS/sdks" ]; then
+          git clone --depth 1 https://github.com/theos/sdks.git $THEOS/sdks
+        fi
 
-      - name: Build Tweak
-        run: |
-          echo "SDK qovluğu yoxlanılır..."
-          ls -la SDK/
-          make package
+    - name: Compile Project
+      run: |
+        make clean || true
+        make package FINALPACKAGE=1
+
+    - name: Upload Dylib and Deb Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ADMIN-Build-Output
+        path: |
+          .theos/obj/arm64/ADMIN.dylib
+          packages/*.deb
+          .theos/obj/debug/arm64/ADMIN.dylib
