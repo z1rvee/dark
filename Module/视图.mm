@@ -1996,5 +1996,8 @@ imDrawList->AddLine(ImVec2{center_x+(center_w/2),center_y+(center_h/2)},ImVec2{c
     return texture;
 }
 
+// JRMemory-dən gələn readFrameData funksiyasını çağırırıq
+// (əgər JRMemory-də bu funksiya varsa, linker onu tapacaq)
+extern "C" void readFrameData(ImVec2 a, std::vector<PlayerData>& b, std::vector<MaterialData>& c);
 
 @end
