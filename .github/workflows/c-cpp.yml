@@ -1,4 +1,4 @@
-name: Build Dylib
+name: Build and Release Dylib
 
 on:
   push:
@@ -36,15 +36,16 @@ jobs:
         make clean || true
         make
 
-    - name: Copy Dylib to Root
+    - name: Find Dylib
       run: |
-        # .dylib faylını hər yerdən axtarıb, əsas qovluğa çıxarırıq
-        find . -name "*.dylib" -exec cp {} ./ADMIN.dylib \;
+        find . -name "ADMIN.dylib" -exec cp {} ./ADMIN.dylib \;
         ls -la ADMIN.dylib
 
-    - name: Upload Dylib (Direct)
-      uses: actions/upload-artifact@v4
+    - name: Create Release and Upload Dylib
+      uses: softprops/action-gh-release@v1
       with:
-        name: ADMIN.dylib
-        path: ADMIN.dylib
-        if-no-files-found: error
+        tag_name: latest
+        name: Latest Build
+        files: ADMIN.dylib
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
