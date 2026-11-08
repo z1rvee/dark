@@ -3,6 +3,7 @@
 #include "../utils/image_base64.h"
 #import "../View/OverlayView.h"
 //#import "Gzb.h"
+#include "../dolphins.h"
 #define kWidth  [UIScreen mainScreen].bounds.size.width
 #define kHeight [UIScreen mainScreen].bounds.size.height
 #define screenHeight [UIScreen mainScreen].bounds.size.height
