@@ -1,252 +1,1190 @@
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import "SDK.hpp"
-#import "../Module/视图.h"
-#import "菜单.h"
+#include "../utils/module_tools.h"
+#import "视图.h"
+#include "../utils/image_base64.h"
 #import "../View/OverlayView.h"
+//#import "Gzb.h"
+#define kWidth  [UIScreen mainScreen].bounds.size.width
+#define kHeight [UIScreen mainScreen].bounds.size.height
+#define screenHeight [UIScreen mainScreen].bounds.size.height
+#define screenWidth [UIScreen mainScreen].bounds.size.width
+@implementation mao
+ImDrawList *imDrawList;
 
-@implementation mao {
-    std::vector<PlayerData> playerDataList;
-    std::vector<MaterialData> materialDataList;
+CGSize screenSize;
+
+std::vector<PlayerData> playerDataList;
+std::vector<MaterialData> materialDataList;
+int xWidth =50;
+int xtWidth =10;
+int hpWidth = 100;
+int hpHeight = 14;
+int hpHeight1 = 30;
+int hpWidth1 = 110;
+int hpHeight2 = 30;
+
+int scWidth = 220;
+int scHeight = 110;
+int qtWidth = 220;
+int qtHeight = 50;
+int ZJWidth = 40;
+int ZJHeight = 6;
+int HPBest = 100;
+
+//int xWidth =50;
+//int xtWidth =10;
+//int hpWidth = 110;
+//int hpHeight = 4;
+
+
+id<MTLTexture> leizhaTexture;
+id<MTLTexture> hongzhaTexture;
+id<MTLTexture> shouleiTexture;
+id<MTLTexture> sldTexture;
+id<MTLTexture> ywdTexture;
+id<MTLTexture> rspTexture;
+
+id<MTLTexture> countTexture;
+id<MTLTexture> count1Texture;
+id<MTLTexture> count2Texture;
+id<MTLTexture> count3Texture;
+id<MTLTexture> count4Texture;
+id<MTLTexture> count5Texture;
+id<MTLTexture> quanTexture;
+id<MTLTexture> playerTexture;
+id<MTLTexture> robotTexture;
+
+id<MTLTexture> M416Texture;
+id<MTLTexture> M16Texture;
+id<MTLTexture> GrozaTexture;
+id<MTLTexture> AkmTexture;
+id<MTLTexture> SCARTexture;
+id<MTLTexture> MK47Texture;
+id<MTLTexture> AUGTexture;
+id<MTLTexture> M762Texture;
+id<MTLTexture> QBZTexture;
+id<MTLTexture> leiTexture;
+id<MTLTexture> huoTexture;
+id<MTLTexture> yanTexture;
+id<MTLTexture> shanTexture;
+id<MTLTexture> R1895Texture;
+id<MTLTexture> P92Texture;
+id<MTLTexture> P1911Texture;
+id<MTLTexture> P18CTexture;
+id<MTLTexture> R45Texture;
+id<MTLTexture> SKSTexture;
+id<MTLTexture> MINITexture;
+id<MTLTexture> MK14Texture;
+id<MTLTexture> VSSTexture;
+id<MTLTexture> QBUTexture;
+id<MTLTexture> SLRTexture;
+id<MTLTexture> AWMTexture;
+id<MTLTexture> M24Texture;
+id<MTLTexture> K98Texture;
+id<MTLTexture> MOTexture;
+id<MTLTexture> LIANTexture;
+id<MTLTexture> GUNTexture;
+id<MTLTexture> DAOTexture;
+id<MTLTexture> GUOTexture;
+id<MTLTexture> UZITexture;
+id<MTLTexture> TANGTexture;
+id<MTLTexture> VKTTexture;
+id<MTLTexture> MP5KTexture;
+id<MTLTexture> UMP9Texture;
+id<MTLTexture> YNTexture;
+id<MTLTexture> DP28Texture;
+id<MTLTexture> MG3Texture;
+id<MTLTexture> M249Texture;
+id<MTLTexture> DBSTexture;
+id<MTLTexture> S686Texture;
+id<MTLTexture> S12KTexture;
+
+id<MTLTexture> JPTexture;
+id<MTLTexture> BBTexture;
+id<MTLTexture> jcTexture;
+id<MTLTexture> mttTexture;
+id<MTLTexture> mtTexture;
+id<MTLTexture> myTexture;
+id<MTLTexture> R8Texture;
+id<MTLTexture> mt3Texture;
+
+id<MTLTexture> m416Texture;
+id<MTLTexture> akmTexture;
+id<MTLTexture> augTexture;
+id<MTLTexture> grozaTexture;
+id<MTLTexture> m16Texture;
+id<MTLTexture> m24Texture;
+id<MTLTexture> m249Texture;
+id<MTLTexture> m762Texture;
+id<MTLTexture> mg3Texture;
+id<MTLTexture> miniTexture;
+id<MTLTexture> mk14Texture;
+id<MTLTexture> mk47Texture;
+id<MTLTexture> scarTexture;
+id<MTLTexture> slrTexture;
+id<MTLTexture> awmTexture;
+id<MTLTexture> dp28Texture;
+id<MTLTexture> k98Texture;
+id<MTLTexture> vssTexture;
+id<MTLTexture> sksTexture;
+id<MTLTexture> hzTexture;
+
+id<MTLTexture> ylTexture;
+id<MTLTexture> jjbTexture;
+id<MTLTexture> ztyTexture;
+id<MTLTexture> ylxTexture;
+id<MTLTexture> zhenTexture;
+
+id<MTLTexture> b4Texture;
+id<MTLTexture> b3Texture;
+id<MTLTexture> b6Texture;
+id<MTLTexture> b8Texture;
+
+id<MTLTexture> ktTexture;
+id<MTLTexture> t3Texture;
+id<MTLTexture> j3Texture;
+id<MTLTexture> bb3Texture;
+
+id<MTLTexture> tleiTexture;
+id<MTLTexture> tyanTexture;
+id<MTLTexture> thuoTexture;
+
+static void DrawTextX(std::string text, ImVec2 pos,  int color, bool outline, float fontSize)
+{
+    const char *str = text.c_str();
+    ImVec2 vec2 = pos;
     
-    ImDrawList* imDrawList;
-    
-    int xWidth, xtWidth, hpWidth, hpHeight, hpHeight1, hpWidth1, hpHeight2;
-    int scWidth, scHeight, qtWidth, qtHeight, ZJWidth, ZJHeight, HPBest;
-    
-    // BÜTÜN TEXTURE-LƏR
-    id<MTLTexture> leizhaTexture, hongzhaTexture, shouleiTexture, sldTexture, ywdTexture, rspTexture;
-    id<MTLTexture> countTexture, count1Texture, count2Texture, count3Texture, count4Texture, count5Texture, quanTexture, playerTexture, robotTexture;
-    id<MTLTexture> M416Texture, M16Texture, GrozaTexture, AkmTexture, SCARTexture;
-    id<MTLTexture> MK47Texture, AUGTexture, M762Texture;
-    id<MTLTexture> JPTexture, BBTexture, jcTexture, mttTexture, mtTexture, myTexture, R8Texture, mt3Texture;
-    
-    // Kiçik hərflə başlayanlar
-    id<MTLTexture> m16Texture, m24Texture, m249Texture, m762Texture, mg3Texture, miniTexture, mk14Texture, mk47Texture, scarTexture, slrTexture, awmTexture, dp28Texture, k98Texture, sksTexture, hzTexture, m416Texture, akmTexture, augTexture, grozaTexture;
-    
-    // BÖYÜK hərflə başlayanlar
-    id<MTLTexture> DP28Texture, M249Texture, MG3Texture, S686Texture, DBSTexture, S12KTexture, YNTexture, QBZTexture, QBUTexture, SLRTexture, SKSTexture, MINITexture, M24Texture, K98Texture, AWMTexture, MK14Texture;
-    
-    // Yeni tapılan teksturalar
-    id<MTLTexture> MOTexture, VSSTexture, leiTexture, yanTexture, huoTexture, GUOTexture, LIANTexture, DAOTexture, GUNTexture, MP5KTexture, TANGTexture, UMP9Texture, UZITexture, VKTTexture, P92Texture;
-    
-    // Pistol teksturaları
-    id<MTLTexture> P1911Texture, R1895Texture, P18CTexture, R45Texture;
-    
-    CGSize screenSize;
+    if (outline)
+    {
+        ImU32 outlineColor = 0xFF000000;
+        ImGui::GetWindowDrawList()->AddTextX(ImVec2(vec2.x + 1, vec2.y + 1), outlineColor, fontSize, str);
+        ImGui::GetWindowDrawList()->AddTextX(ImVec2(vec2.x - 1, vec2.y - 1), outlineColor, fontSize, str);
+        ImGui::GetWindowDrawList()->AddTextX(ImVec2(vec2.x + 1, vec2.y - 1), outlineColor, fontSize, str);
+        ImGui::GetWindowDrawList()->AddTextX(ImVec2(vec2.x - 1, vec2.y + 1), outlineColor, fontSize, str);
+    }
+    ImGui::GetWindowDrawList()->AddTextX(vec2, color, fontSize, str);
 }
 
-// ==========================================
-// METOD BURADAN BAŞLAYIR
-// ==========================================
-- (void)drawDrawWindow {
+template<typename ... Args>
+static std::string string_format(const std::string& format, Args ... args){
     
-    // ==========================================
-    // 1-ci DÖVR (Silahlar üçün)
-    // ==========================================
-    for (MaterialData materialData : materialDataList) {
-        
-        if (self.moduleControl->playerSwitch.Mini14) {
-            if (materialData.name=="Mini14") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.M24) {
-            if (materialData.name=="M24") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.Kar98k) {
-            if (materialData.name=="Kar98k") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.Mk14) {
-            if (materialData.name=="Mk14") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.莫辛纳甘) {
-            if (materialData.name=="莫辛纳甘") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.MK12) {
-            if (materialData.name=="MK12") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.AMR) {
-            if (materialData.name=="AMR") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.AWM) {
-            if (materialData.name=="AWM") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.M762) {
-            if (materialData.name=="M762") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.SCARL) {
-            if (materialData.name=="SCARL") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.M416) {
-            if (materialData.name=="M416") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.M16A4) {
-            if (materialData.name=="M16A4") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.Mk47) {
-            if (materialData.name=="Mk47") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.G36C) {
-            if (materialData.name=="G36C") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.QBZ) {
-            if (materialData.name=="QBZ") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.Groza) {
-            if (materialData.name=="Groza") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.AUG) {
-            if (materialData.name=="AUG") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.AKM) {
-            if (materialData.name=="AKM") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.大盘鸡) {
-            if (materialData.name=="大盘鸡") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.大菠萝) {
-            if (materialData.name=="大菠萝") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.MG3) {
-            if (materialData.name=="MG3") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.手雷) {
-            if (materialData.name=="手雷") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-        if (self.moduleControl->playerSwitch.烟雾弹) {
-            if (materialData.name=="烟雾弹") {
-                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
-            }
-        }
-    } // <-- 1-ci DÖVRÜN SONU
+    size_t size = 1 + snprintf(nullptr, 0, format.c_str(), args ...); // 计算格式化后的字符串长度
+    char bytes[size]; // 用于存储格式化后的字符串
+    snprintf(bytes, size, format.c_str(), args ...); // 格式化字符串并存储到 bytes 中
+    return std::string(bytes); // 将 bytes 转换成 string 类型并返回
+}
+void DrawBox3D(ImDrawList *draw,Box3D box3d, ImColor col, float thickness) {
+  
+    Line(draw,box3d.s1, box3d.s2, col,2.0f);
+    Line(draw,box3d.s2, box3d.s3, col,2.0f);
+    Line(draw,box3d.s3, box3d.s4, col,2.0f);
+    Line(draw,box3d.s4, box3d.s1, col,2.0f);
+ 
+    Line(draw,box3d.s5, box3d.s6, col,2.0f);
+    Line(draw,box3d.s6, box3d.s7, col,2.0f);
+    Line(draw,box3d.s7, box3d.s8, col,2.0f);
+    Line(draw,box3d.s8, box3d.s5, col,2.0f);
+ 
+    Line(draw,box3d.s1, box3d.s5, col,2.0f);
+    Line(draw,box3d.s2, box3d.s6, col,2.0f);
+    Line(draw,box3d.s3, box3d.s7, col,2.0f);
+    Line(draw,box3d.s4, box3d.s8, col,2.0f);
 
-    // ==========================================
-    // 2-ci DÖVR (Avtomobillər və qutular üçün)
-    // ==========================================
-    for (MaterialData materialData : materialDataList) {
-        
-        // 物品贴图
-        if (self.moduleControl->playerSwitch.WZStatus) {
-            if (materialData.name=="[预警]小心手雷") {
-                imDrawList->AddImage((__bridge ImTextureID) shouleiTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="吉普") {
-                imDrawList->AddImage((__bridge ImTextureID) JPTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="蹦蹦") {
-                imDrawList->AddImage((__bridge ImTextureID) BBTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="轿车") {
-                imDrawList->AddImage((__bridge ImTextureID) jcTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
-            if (materialData.name=="摩托艇") {
-                imDrawList->AddImage((__bridge ImTextureID) mttTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
-            }
+}
+- (instancetype)initWithFrame:(ModuleControl*)control {
+    self = [super init];
+    
+    self.moduleControl = control;
+    
+    screenSize = [UIScreen mainScreen].bounds.size;
+    screenSize.width *= [UIScreen mainScreen].nativeScale;
+    screenSize.height *= [UIScreen mainScreen].nativeScale;
+    
+    return self;
+}
+
+-(void)drawDrawWindow {
+    ImGui::SetNextWindowSize(ImVec2(screenSize.width,screenSize.height));
+    ImGui::SetNextWindowPos(ImVec2(0, 0));
+    ImGui::Begin("alpha", nullptr, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoMove);
+    
+    imDrawList = ImGui::GetWindowDrawList();
+    //拉取一帧的数
+    readFrameData(ImVec2(screenSize.width / 2,screenSize.height / 2),playerDataList, materialDataList);
+    for (MaterialData materialData:materialDataList) {
+            //判断是否在屏幕内
+        if (self.moduleControl->playerSwitch.WZWZStatus) {
+                    if (materialData.name=="[预警]小心手雷") {//警告贴图
+                        imDrawList->AddImage((__bridge ImTextureID) leizhaTexture, ImVec2(screenSize.width / 2 - leizhaTexture.width / 2, 230), ImVec2(screenSize.width / 2 + leizhaTexture.width / 2, 230 + leizhaTexture.height), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+                    }
+                    if (materialData.name=="[轰炸预警]小心轰炸区") {
+                        imDrawList->AddImage((__bridge ImTextureID) hongzhaTexture, ImVec2(screenSize.width / 2 - hongzhaTexture.width / 2, 180), ImVec2(screenSize.width / 2 + hongzhaTexture.width / 2, 180 + hongzhaTexture.height), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+                    }
+                    if (materialData.name=="[预警]小心手雷") {
+                        imDrawList->AddImage((__bridge ImTextureID) sldTexture, ImVec2(materialData.screen.x+190 - qtWidth+1, materialData.screen.y-5 -  qtHeight+1), ImVec2(materialData.screen.x+190 - qtWidth+1 + qtHeight-2 , materialData.screen.y-5 - qtHeight + qtHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+                    }
+                    if (materialData.name=="[预警]烟雾弹") {
+                        imDrawList->AddImage((__bridge ImTextureID) ywdTexture, ImVec2(materialData.screen.x+190 - qtWidth+1, materialData.screen.y-5 -  qtHeight+1), ImVec2(materialData.screen.x+190 - qtWidth+1 + qtHeight-2 , materialData.screen.y-5 - qtHeight + qtHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+                    }
+                    if (materialData.name=="[预警]燃烧瓶") {
+                        imDrawList->AddImage((__bridge ImTextureID) rspTexture, ImVec2(materialData.screen.x+190 - qtWidth+1, materialData.screen.y-5 -  qtHeight+1), ImVec2(materialData.screen.x+190 - qtWidth+1 + qtHeight-2 , materialData.screen.y-5 - qtHeight + qtHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+                    }
+            //物品文字
+            if (materialData.distance != -100){
+                //载具
             if (materialData.name=="摩托车") {
-                imDrawList->AddImage((__bridge ImTextureID) mtTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+                std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+
+             }
+            if (materialData.name=="三轮摩托") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+               imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
             }
             if (materialData.name=="小绵羊") {
-                imDrawList->AddImage((__bridge ImTextureID) myTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+               imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
             }
-            if (materialData.name=="CoupeRB") {
-                imDrawList->AddImage((__bridge ImTextureID) R8Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+            if (materialData.name=="蹦蹦") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+               imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
             }
-            if (materialData.name=="三轮摩托") {
-                imDrawList->AddImage((__bridge ImTextureID) mt3Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 - scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2, materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+            if (materialData.name=="跑车") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
             }
-        }
-    } // <-- 2-ci DÖVRÜN SONU
+            if (materialData.name=="轿车") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+            }
+            if (materialData.name=="吉普") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+            }
+            if (materialData.name=="大船") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+            }
+            if (materialData.name=="摩托艇") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+            }
+            if (materialData.name=="宝宝巴士") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+            }
+            if (materialData.name=="装甲车") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+            }
+            if (materialData.name=="吉普车") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+            }
+            if (materialData.name=="雪地摩托") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+            }
+            if (materialData.name=="雪地重型摩托") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+            }
+            if (materialData.name=="皮卡") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+            }
+            if (materialData.name=="双人跑车") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 206, 209), 21, str.c_str());
+            }//车辆文字显示
+         //载具方框
+        if (self.moduleControl->playerSwitch.Vehiclebox) {
+DrawBox3D(imDrawList, materialData.objbox3d,ImColor(255,165,0),2.0f);
+}
+        //车辆耐久血条
+          if (self.moduleControl->playerSwitch.Vehiclehf) {
+                        //载具
+                        if (materialData.distance > 10 && materialData.VehicleHP >0){
 
-    // ... 363-cü sətirdən sonrakı kodunuz buradan davam edir ...
+                            imDrawList->AddRectFilled({materialData.screen.x - 6 - ZJWidth, materialData.screen.y+28   - ZJHeight}, {materialData.screen.x - ZJWidth + (ZJWidth * 2) * materialData.VehicleHP / 100, materialData.screen.y+28 }, ImColor(220, 20, 60, 150), 10.0f);
+                            imDrawList->AddRectFilled({materialData.screen.x - 6 - ZJWidth, materialData.screen.y+37   - ZJHeight}, {materialData.screen.x - ZJWidth + (ZJWidth * 2) * materialData.VehicleFuel / 100, materialData.screen.y+37 }, ImColor(30, 144, 255, 180), 10.0f);
+                            imDrawList->AddRect({materialData.screen.x - 6 - ZJWidth, materialData.screen.y+28   - ZJHeight}, {materialData.screen.x - ZJWidth + (ZJWidth * 2) * materialData.VehicleHP / 100, materialData.screen.y+28 }, ImColor(255, 255, 255, 150), 10.0f, 0, 1.0f);
+                            imDrawList->AddRect({materialData.screen.x - 6 - ZJWidth, materialData.screen.y+37   - ZJHeight}, {materialData.screen.x - ZJWidth + (ZJWidth * 2) * materialData.VehicleFuel / 100, materialData.screen.y+37 }, ImColor(255, 255, 255, 150), 10.0f, 0, 1.0f);
+}
+}
+            //空投盒子
+            if (materialData.name=="[盒子]") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 255, 0), 21, str.c_str());
+        //盒子3D
+          if (self.moduleControl->playerSwitch.Airdropbox) {
+DrawBox3D(imDrawList, materialData.objbox3d,ImColor(91,206,200),2.0f);
+}
+            }
+        //盒子3D
+          if (self.moduleControl->playerSwitch.Airdropbox) {
+DrawBox3D(imDrawList, materialData.objbox3d,ImColor(91,206,200),2.0f);
+}
+            if (materialData.name=="盒子") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 255, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[空投]") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 20, 147), 21, str.c_str());
+            }
+            if (materialData.name=="空投") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 20, 147), 21, str.c_str());
+            }
+            if (materialData.name=="信号枪") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 20, 147), 21, str.c_str());
+            }
+            //狙击枪
+        if (self.moduleControl->playerSwitch.QBU) {
+            if (materialData.name=="QBU") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.SLR) {
+            if (materialData.name=="SLR") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.SKS) {
+            if (materialData.name=="SKS") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.Mini14) {
+            if (materialData.name=="Mini14") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.M24) {
+            if (materialData.name=="M24") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.Kar98k) {
+            if (materialData.name=="Kar98k") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.Mk14) {
+            if (materialData.name=="Mk14") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.莫辛纳甘) {
+            if (materialData.name=="莫辛纳甘") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.MK12) {
+            if (materialData.name=="MK12") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.AMR) {
+            if (materialData.name=="AMR") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.AWM) {
+            if (materialData.name=="AWM") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+            //步枪
+        if (self.moduleControl->playerSwitch.M762) {
+            if (materialData.name=="M762") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.SCARL) {
+            if (materialData.name=="SCAR-L") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.M416) {
+            if (materialData.name=="M416") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.M16A4) {
+            if (materialData.name=="M16A4") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.Mk47) {
+            if (materialData.name=="Mk47") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.G36C) {
+            if (materialData.name=="G36C") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.QBZ) {
+            if (materialData.name=="QBZ") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.Groza) {
+            if (materialData.name=="Groza") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.AUG) {
+            if (materialData.name=="AUG") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.AKM) {
+            if (materialData.name=="AKM") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.大盘鸡) {
+            if (materialData.name=="大盘鸡") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.大菠萝) {
+            if (materialData.name=="大菠萝") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.MG3) {
+            if (materialData.name=="MG3") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.手雷) {
+            if (materialData.name=="手雷") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 127, 80), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.烟雾弹) {
+            if (materialData.name=="烟雾弹") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 127, 80), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.燃烧瓶) {
+            if (materialData.name=="燃烧瓶") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 127, 80), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.二级头) {
+            if (materialData.name=="二级甲") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.三级甲) {
+            if (materialData.name=="三级甲") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.二级包) {
+            if (materialData.name=="二级包") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.三级包) {
+            if (materialData.name=="三级包") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.二级头) {
+            if (materialData.name=="二级头") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.三级头) {
+            if (materialData.name=="三级头") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.止痛药) {
+            if (materialData.name=="止痛药") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 210, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.肾上腺素) {
+            if (materialData.name=="肾上腺素") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 210, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.饮料) {
+            if (materialData.name=="饮料") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 210, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.急救包) {
+            if (materialData.name=="急救包") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 210, 0), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.医疗箱) {
+            if (materialData.name=="医疗箱") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 210, 0), 21, str.c_str());
+            }
+}
+            if (materialData.name=="油桶") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 210, 0), 21, str.c_str());
+            }
+        if (self.moduleControl->playerSwitch.红点) {
+            if (materialData.name=="红点") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+               imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(70, 130, 180), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.全息) {
+            if (materialData.name=="全息") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(70, 130, 180), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.倍镜3) {
+            if (materialData.name=="3X") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(70, 130, 180), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.倍镜4) {
+            if (materialData.name=="4X") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(70, 130, 180), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.倍镜6) {
+            if (materialData.name=="6X") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(70, 130, 180), 21, str.c_str());
+            }
+}
+        if (self.moduleControl->playerSwitch.倍镜8) {
+            if (materialData.name=="8X") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(70, 130, 180), 21, str.c_str());
+            }
+}
+            if (materialData.name=="[预警]燃烧瓶") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(178, 34, 34), 21, str.c_str());
+            }
+            if (materialData.name=="[预警]烟雾弹") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(178, 34, 34), 21, str.c_str());
+            }
+            if (materialData.name=="[预警]小心手雷") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(178, 34, 34), 21, str.c_str());
+            }
+            if (materialData.name=="[轰炸预警]小心轰炸区") {
+               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(178, 34, 34), 21, str.c_str());
+            }
+            } else {
+                if (materialData.name=="[药]止痛药") {
+                   std::string str = materialData.name;
+                    imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                   imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 210, 0), 21, str.c_str());
+                }
+                if (materialData.name=="[药]肾上腺素") {
+                   std::string str = materialData.name;
+                    imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                   imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 210, 0), 21, str.c_str());
+                }
+                if (materialData.name=="[药]饮料") {
+                   std::string str = materialData.name;
+                    imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                   imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 210, 0), 21, str.c_str());
+                }
+                if (materialData.name=="[药]急救包") {
+                   std::string str = materialData.name;
+                    imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                   imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 210, 0), 21, str.c_str());
+                }
+                if (materialData.name=="[药]医疗箱") {
+                   std::string str = materialData.name;
+                    imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                   imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 210, 0), 21, str.c_str());
+                }
+            if (materialData.name=="[防]三级甲") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[包]三级包") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[头]三级头") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[防]二级甲") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[包]二级包") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[头]二级头") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            
+            if (materialData.name=="[狙]QBU") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[狙]SLR") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[狙]SKS") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[狙]Mini14") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[狙]M24") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[狙]Kar98k") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[狙]Mk14") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[狙]莫辛纳甘") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[狙]MK12") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[狙]AMR") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[狙]AWM") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[枪]M762") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[枪]SCAR-L") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[枪]M416") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[枪]M16A4") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[枪]Mk47") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[枪]G36C") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[枪]QBZ") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[枪]Groza") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[枪]AUG") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[枪]AKM") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[机]大盘鸡") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[机]大菠萝") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[机]MG3") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[弹]5.56mm") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 255, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[弹]7.62mm") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 255, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[弹]马格南") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 255, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[弹]信号弹") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(0, 255, 0), 21, str.c_str());
+            }
+            if (materialData.name=="[镜]红点") {
+               std::string str = materialData.name;
+               imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(70, 130, 180), 21, str.c_str());
+            }
+            if (materialData.name=="[镜]全息") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(70, 130, 180), 21, str.c_str());
+            }
+            if (materialData.name=="[镜]3X") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(70, 130, 180), 21, str.c_str());
+            }
+            if (materialData.name=="[镜]4X") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(70, 130, 180), 21, str.c_str());
+            }
+            if (materialData.name=="[镜]6X") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(70, 130, 180), 21, str.c_str());
+            }
+            if (materialData.name=="[镜]8X") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(70, 130, 180), 21, str.c_str());
+            }
+            if (materialData.name=="[投]手雷") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 127, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[投]烟雾弹") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 127, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[投]燃烧瓶") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 127, 80), 21, str.c_str());
+            }
+
+
+
+
+            if (materialData.name=="[狙配件]托腮板") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[狙配件]子弹袋") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[狙配件]子弹袋") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[狙配件]消焰器") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[狙配件]枪口补偿") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[狙配件]消音器") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[狙配件]快速扩容") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[狙配件]扩容") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[握]拇指握把") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[握]垂直握把") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[握]半截式握把") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[配件]枪口补偿") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[配件]战术枪托") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[配件]消焰器") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[配件]消音器") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[配件]快速扩容") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }
+            if (materialData.name=="[配件]扩容") {
+               std::string str = materialData.name;
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 255, 80), 21, str.c_str());
+            }                
+          }
+        }
+//物品贴图
+if (self.moduleControl->playerSwitch.WZStatus) {
+if (materialData.name=="[预警]小心手雷") {
+imDrawList->AddImage((__bridge ImTextureID) shouleiTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+
+if (materialData.name=="吉普") {
+imDrawList->AddImage((__bridge ImTextureID) JPTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="蹦蹦") {
+imDrawList->AddImage((__bridge ImTextureID) BBTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="轿车") {
+imDrawList->AddImage((__bridge ImTextureID) jcTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="摩托艇") {
+imDrawList->AddImage((__bridge ImTextureID) mttTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="摩托车") {
+imDrawList->AddImage((__bridge ImTextureID) mtTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="小绵羊") {
+imDrawList->AddImage((__bridge ImTextureID) myTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="CoupeRB") {
+imDrawList->AddImage((__bridge ImTextureID) R8Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="三轮摩托") {
+imDrawList->AddImage((__bridge ImTextureID) mt3Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="M416") {
+imDrawList->AddImage((__bridge ImTextureID) m416Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="AKM") {
+imDrawList->AddImage((__bridge ImTextureID) akmTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="AUG") {
+imDrawList->AddImage((__bridge ImTextureID) augTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="Groza") {
+imDrawList->AddImage((__bridge ImTextureID) grozaTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="M16A4") {
+imDrawList->AddImage((__bridge ImTextureID) m16Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="M24") {
+imDrawList->AddImage((__bridge ImTextureID) m24Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="大菠萝") {
+imDrawList->AddImage((__bridge ImTextureID) m249Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="M762") {
+imDrawList->AddImage((__bridge ImTextureID) m762Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="MG3") {
+imDrawList->AddImage((__bridge ImTextureID) mg3Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="Mini14") {
+imDrawList->AddImage((__bridge ImTextureID) miniTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="Mk14") {
+imDrawList->AddImage((__bridge ImTextureID) mk14Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="Mk47") {
+imDrawList->AddImage((__bridge ImTextureID) mk47Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="SCAR-L") {
+imDrawList->AddImage((__bridge ImTextureID) scarTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="SLR") {
+imDrawList->AddImage((__bridge ImTextureID) slrTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="AWM") {
+imDrawList->AddImage((__bridge ImTextureID) awmTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="大盘鸡") {
+imDrawList->AddImage((__bridge ImTextureID) dp28Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="Kar98k") {
+imDrawList->AddImage((__bridge ImTextureID) k98Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="SKS") {
+imDrawList->AddImage((__bridge ImTextureID) sksTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="[盒子]") {
+imDrawList->AddImage((__bridge ImTextureID) hzTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="盒子") {
+imDrawList->AddImage((__bridge ImTextureID) ktTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+17 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+17 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+
+if (materialData.name=="饮料") {
+imDrawList->AddImage((__bridge ImTextureID) ylTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="止痛药") {
+imDrawList->AddImage((__bridge ImTextureID) ztyTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="急救包") {
+imDrawList->AddImage((__bridge ImTextureID) jjbTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="医疗箱") {
+imDrawList->AddImage((__bridge ImTextureID) ylxTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="肾上腺素") {
+imDrawList->AddImage((__bridge ImTextureID) zhenTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+
+if (materialData.name=="4X") {
+imDrawList->AddImage((__bridge ImTextureID) b4Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="3X") {
+imDrawList->AddImage((__bridge ImTextureID) b3Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="6X") {
+imDrawList->AddImage((__bridge ImTextureID) b6Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="8X") {
+imDrawList->AddImage((__bridge ImTextureID) b8Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="[空投]") {
+imDrawList->AddImage((__bridge ImTextureID) ktTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="空投") {
+imDrawList->AddImage((__bridge ImTextureID) ktTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="三级头") {
+imDrawList->AddImage((__bridge ImTextureID) t3Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="三级甲") {
+imDrawList->AddImage((__bridge ImTextureID) j3Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="三级包") {
+imDrawList->AddImage((__bridge ImTextureID) bb3Texture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="手雷") {
+imDrawList->AddImage((__bridge ImTextureID) tleiTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="烟雾弹") {
+imDrawList->AddImage((__bridge ImTextureID) tyanTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+if (materialData.name=="燃烧瓶") {
+imDrawList->AddImage((__bridge ImTextureID) thuoTexture, ImVec2(materialData.screen.x+165 - scWidth+1, materialData.screen.y+10 -  scHeight+1), ImVec2(materialData.screen.x+165 - scWidth+1 + scHeight-2 , materialData.screen.y+10 - scHeight + scHeight-1), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f));
+}
+//物品距离——贴图
+if (materialData.distance != -100) {
+std::string str = std::to_string(materialData.distance) + "M";
+imDrawList->AddTextX(ImVec2(materialData.screen.x-14 - calcTextSize(std::to_string(materialData.distance).c_str(), 22) / 2, materialData.screen.y-4 ), ImColor(255, 255,0), 22, str.c_str());
+} else {
+std::string str = materialData.name + ":";//盒子内物资
+imDrawList->AddRectFilled({materialData.screen.x - calcTextSize(materialData.name.c_str(), 22) / 2, materialData.screen.y }, {materialData.screen.x + calcTextSize(materialData.name.c_str(), 22) / 2, materialData.screen.y + 22}, ImColor(0, 0, 0, 80), 10.0f);
+imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(materialData.name.c_str(), 22) / 2, materialData.screen.y + (22 / 2 - 22 / 2)), ImColor(255, 255, 255), 22, materialData.name.c_str());
+}
+      }
+}
+    
+    if (self.moduleControl->mainSwitch.playerStatus) {
         //雷达UI
     if (self.moduleControl->playerSwitch.radarStatus) {
     // 正方形的左上角和右下角坐标
@@ -1058,8 +1996,9 @@ imDrawList->AddLine(ImVec2{center_x+(center_w/2),center_y+(center_h/2)},ImVec2{c
     return texture;
 }
 
-// Linker xətasını həll etmək üçün boş metod
-- (void)readFrameData:(ImVec2)a players:(std::vector<PlayerData>&)b materials:(std::vector<MaterialData>&)c {
-    // Boş metod
+// Linker xətasını həll etmək üçün boş funksiya tərifi
+void readFrameData(ImVec2 a, std::vector<PlayerData>& b, std::vector<MaterialData>& c) {
+    // Bu funksiya hələlik boşdur.
+    // Əgər JRMemory-də varsa, gələcəkdə bura əlavə oluna bilər.
 }
 @end
