@@ -63,20 +63,22 @@ extern void DrawWatermark();
         UIWindow *window = (UIWindow *)self;
         if (window && ![window.rootViewController isKindOfClass:[ImGuiDrawView class]]) {
             
-            // rootViewController-i DEYISHMIRIK, sadece ustune overlay penceresi elave edirik
+            // Oyunun öz pəncərəsini DEYİŞMİRİK.
+            // Əvəzinə yeni, şəffaf bir pəncərə yaradırıq.
             ImGuiDrawView *overlayVC = [[ImGuiDrawView alloc] init];
             overlayVC.view.backgroundColor = [UIColor clearColor];
-            overlayVC.view.userInteractionEnabled = NO; // Toxunuslari oyuna oturur
             
-            // Yeni bir pəncərə yaradırıq ki, oyunun öz pəncərəsini pozaq
+            // Toxunuşların oyuna keçməsi üçün bunu NO edirik
+            overlayVC.view.userInteractionEnabled = NO; 
+            
             UIWindow *overlayWindow = [[UIWindow alloc] initWithFrame:window.bounds];
-            overlayWindow.windowLevel = UIWindowLevelAlert + 1;
+            overlayWindow.windowLevel = UIWindowLevelAlert + 1; // Oyunun üstündə görünməsi üçün
             overlayWindow.rootViewController = overlayVC;
             overlayWindow.backgroundColor = [UIColor clearColor];
             overlayWindow.hidden = NO;
             [overlayWindow makeKeyAndVisible];
             
-            // Oyunun oz penceresini geri qaytaririq ki, toxunuslar islesin
+            // Oyunun öz pəncərəsini geri qaytarırıq ki, oyun donmasın
             [window makeKeyAndVisible];
         }
     });
