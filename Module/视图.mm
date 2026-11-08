@@ -4,6 +4,7 @@
 #import "../Module/视图.h"
 #import "菜单.h"
 #import "../View/OverlayView.h"
+#include "../dolphins.h"
 
 @implementation mao {
     std::vector<PlayerData> playerDataList;
@@ -14,22 +15,19 @@
     int xWidth, xtWidth, hpWidth, hpHeight, hpHeight1, hpWidth1, hpHeight2;
     int scWidth, scHeight, qtWidth, qtHeight, ZJWidth, ZJHeight, HPBest;
     
+    // BÜTÜN TEXTURE-LƏR
     id<MTLTexture> leizhaTexture, hongzhaTexture, shouleiTexture, sldTexture, ywdTexture, rspTexture;
     id<MTLTexture> countTexture, count1Texture, count2Texture, count3Texture, count4Texture, count5Texture, quanTexture, playerTexture, robotTexture;
     id<MTLTexture> M416Texture, M16Texture, GrozaTexture, AkmTexture, SCARTexture;
     id<MTLTexture> MK47Texture, AUGTexture, M762Texture;
     id<MTLTexture> JPTexture, BBTexture, jcTexture, mttTexture, mtTexture, myTexture, R8Texture, mt3Texture;
     
-    // Kiçik hərflə başlayanlar
     id<MTLTexture> m16Texture, m24Texture, m249Texture, m762Texture, mg3Texture, miniTexture, mk14Texture, mk47Texture, scarTexture, slrTexture, awmTexture, dp28Texture, k98Texture, sksTexture, hzTexture, m416Texture, akmTexture, augTexture, grozaTexture;
     
-    // BÖYÜK hərflə başlayanlar
     id<MTLTexture> DP28Texture, M249Texture, MG3Texture, S686Texture, DBSTexture, S12KTexture, YNTexture, QBZTexture, QBUTexture, SLRTexture, SKSTexture, MINITexture, M24Texture, K98Texture, AWMTexture, MK14Texture;
     
-    // Yeni tapılan teksturalar
     id<MTLTexture> MOTexture, VSSTexture, leiTexture, yanTexture, huoTexture, GUOTexture, LIANTexture, DAOTexture, GUNTexture, MP5KTexture, TANGTexture, UMP9Texture, UZITexture, VKTTexture, P92Texture;
     
-    // Pistol teksturaları
     id<MTLTexture> P1911Texture, R1895Texture, P18CTexture, R45Texture;
     
     CGSize screenSize;
@@ -46,72 +44,169 @@
     for (MaterialData materialData : materialDataList) {
         
         if (self.moduleControl->playerSwitch.Mini14) {
-            // ... kodunuz ...
+            if (materialData.name=="Mini14") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.M24) {
+            if (materialData.name=="M24") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.Kar98k) {
+            if (materialData.name=="Kar98k") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.Mk14) {
+            if (materialData.name=="Mk14") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.莫辛纳甘) {
+            if (materialData.name=="莫辛纳甘") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.MK12) {
+            if (materialData.name=="MK12") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.AMR) {
+            if (materialData.name=="AMR") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.AWM) {
+            if (materialData.name=="AWM") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.M762) {
+            if (materialData.name=="M762") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.SCARL) {
+            if (materialData.name=="SCARL") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.M416) {
+            if (materialData.name=="M416") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.M16A4) {
+            if (materialData.name=="M16A4") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.Mk47) {
+            if (materialData.name=="Mk47") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.G36C) {
+            if (materialData.name=="G36C") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.QBZ) {
+            if (materialData.name=="QBZ") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.Groza) {
+            if (materialData.name=="Groza") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.AUG) {
+            if (materialData.name=="AUG") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.AKM) {
+            if (materialData.name=="AKM") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.大盘鸡) {
+            if (materialData.name=="大盘鸡") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.大菠萝) {
+            if (materialData.name=="大菠萝") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.MG3) {
+            if (materialData.name=="MG3") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.手雷) {
+            if (materialData.name=="手雷") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
+        }
+        if (self.moduleControl->playerSwitch.烟雾弹) {
+            if (materialData.name=="烟雾弹") {
+                std::string str = "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
+                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
+                imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
+            }
         }
     } // <-- 1-ci DÖVRÜN SONU
 
-    // ... digər dövrlər ...
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
-            }
-}
-        if (self.moduleControl->playerSwitch.AUG) {
-            if (materialData.name=="AUG") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
-            }
-}
-        if (self.moduleControl->playerSwitch.AKM) {
-            if (materialData.name=="AKM") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
-            }
-}
-        if (self.moduleControl->playerSwitch.大盘鸡) {
-            if (materialData.name=="大盘鸡") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
-            }
-}
-        if (self.moduleControl->playerSwitch.大菠萝) {
-            if (materialData.name=="大菠萝") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
-            }
-}
-        if (self.moduleControl->playerSwitch.MG3) {
-            if (materialData.name=="MG3") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 69, 0), 21, str.c_str());
-            }
-}
-        if (self.moduleControl->playerSwitch.手雷) {
-            if (materialData.name=="手雷") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 127, 80), 21, str.c_str());
-            }
-}
-        if (self.moduleControl->playerSwitch.烟雾弹) {
-            if (materialData.name=="烟雾弹") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 127, 80), 21, str.c_str());
-            }
-}
-        if (self.moduleControl->playerSwitch.燃烧瓶) {
-            if (materialData.name=="燃烧瓶") {
-               std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
-                imDrawList->AddTextX(ImVec2(materialData.screen.x+1 - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y+1), ImColor(0, 0, 0, 255), 21, str.c_str());
-               imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 127, 80), 21, str.c_str());
-            }
-}
+    // ... 115-ci sətirdən sonrakı kodunuz buradan davam edir ...
         if (self.moduleControl->playerSwitch.二级头) {
             if (materialData.name=="二级甲") {
                std::string str =  "["+ materialData.name +":" + std::to_string(materialData.distance) + "M]";
