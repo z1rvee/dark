@@ -21,7 +21,6 @@ jobs:
         fi
         echo "THEOS=$THEOS" >> $GITHUB_ENV
         
-        # Ldid-i yükləyirik
         curl -L -o /usr/local/bin/ldid https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_macosx_arm64
         sudo chmod +x /usr/local/bin/ldid
         ldid -v || true
@@ -37,14 +36,15 @@ jobs:
         make clean || true
         make
 
-    - name: Find and Copy Dylib to Root
+    - name: Find and Extract Dylib
       run: |
-        # .dylib faylını hər yerdən axtarıb, əsas qovluğa kopyalayırıq
-        find . -name "ADMIN.dylib" -exec cp {} ./ADMIN_Final.dylib \;
-        ls -la ADMIN_Final.dylib
+        # Faylı tapıb birbaşa əsas qovluğa çıxarırıq
+        find . -name "*.dylib" -exec cp {} ./ADMIN.dylib \;
+        ls -la ADMIN.dylib
 
-    - name: Upload Dylib Artifact
+    - name: Upload Dylib (No Zip)
       uses: actions/upload-artifact@v4
       with:
-        name: ADMIN-Dylib-Final
-        path: ADMIN_Final.dylib
+        name: ADMIN-Dylib
+        path: ADMIN.dylib
+        if-no-files-found: error
