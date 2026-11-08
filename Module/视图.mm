@@ -14,7 +14,7 @@
     int xWidth, xtWidth, hpWidth, hpHeight, hpHeight1, hpWidth1, hpHeight2;
     int scWidth, scHeight, qtWidth, qtHeight, ZJWidth, ZJHeight, HPBest;
     
-    // BÜTÜN TEXTURE-LƏR (Həm kiçik, həm böyük hərflə başlayanlar)
+    // BÜTÜN TEXTURE-LƏR (Hər ehtimala qarşı böyük siyahı)
     id<MTLTexture> leizhaTexture, hongzhaTexture, shouleiTexture, sldTexture, ywdTexture, rspTexture;
     id<MTLTexture> countTexture, count1Texture, count2Texture, count3Texture, count4Texture, count5Texture, quanTexture, playerTexture, robotTexture;
     id<MTLTexture> M416Texture, M16Texture, GrozaTexture, AkmTexture, SCARTexture;
@@ -27,8 +27,8 @@
     // BÖYÜK hərflə başlayanlar (Xəta verənlər)
     id<MTLTexture> DP28Texture, M249Texture, MG3Texture, S686Texture, DBSTexture, S12KTexture, YNTexture, QBZTexture, QBUTexture, SLRTexture, SKSTexture, MINITexture, M24Texture, K98Texture, AWMTexture, MK14Texture;
     
-    CGSize screenSize;
-}
+    // Yeni tapılan teksturalar
+    id<MTLTexture> MOTexture, VSSTexture, leiTexture, yanTexture, huoTexture, GUOTexture, LIANTexture, DAOTexture, GUNTexture, MP5KTexture, TANGTexture, UMP9Texture, UZITexture, VKTTexture, P92Texture;
     
     CGSize screenSize;
 }
