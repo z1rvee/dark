@@ -1996,9 +1996,5 @@ imDrawList->AddLine(ImVec2{center_x+(center_w/2),center_y+(center_h/2)},ImVec2{c
     return texture;
 }
 
-// Linker xətasını həll etmək üçün boş funksiya tərifi
-void readFrameData(ImVec2 a, std::vector<PlayerData>& b, std::vector<MaterialData>& c) {
-    // Bu funksiya hələlik boşdur.
-    // Əgər JRMemory-də varsa, gələcəkdə bura əlavə oluna bilər.
-}
+
 @end
