@@ -33,5 +33,8 @@ ADMIN_CFLAGS = -fobjc-arc -I$(THEOS_PROJECT_DIR) -I$(THEOS_PROJECT_DIR)/JRMemory
 
 ADMIN_CCFLAGS = -std=c++17 -fno-exceptions -fno-rtti
 
+# İMZALAMANI SÖNDÜRÜRÜK (ldid xətasını həll edir)
+ADMIN_CODESIGN_FLAGS = -S
+
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
