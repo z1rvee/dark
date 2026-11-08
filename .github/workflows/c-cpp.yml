@@ -21,14 +21,9 @@ jobs:
         fi
         echo "THEOS=$THEOS" >> $GITHUB_ENV
         
-        if [ -f "$THEOS/bin/ldid" ]; then
-          sudo cp "$THEOS/bin/ldid" /usr/local/bin/ldid
-          sudo chmod +x /usr/local/bin/ldid
-        else
-          curl -L -o /usr/local/bin/ldid https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_macosx_arm64
-          sudo chmod +x /usr/local/bin/ldid
-        fi
-        
+        # Ldid-i yükləyirik
+        curl -L -o /usr/local/bin/ldid https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_macosx_arm64
+        sudo chmod +x /usr/local/bin/ldid
         ldid -v || true
 
     - name: Download iOS SDK
@@ -42,13 +37,14 @@ jobs:
         make clean || true
         make
 
+    - name: Find and Copy Dylib to Root
+      run: |
+        # .dylib faylını hər yerdən axtarıb, əsas qovluğa kopyalayırıq
+        find . -name "ADMIN.dylib" -exec cp {} ./ADMIN_Final.dylib \;
+        ls -la ADMIN_Final.dylib
+
     - name: Upload Dylib Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ADMIN-Dylib
-        path: |
-          .theos/obj/arm64/ADMIN.dylib
-          .theos/obj/debug/ADMIN.dylib
-          .theos/obj/arm64/ADMIN.dylib
-          .theos/obj/ADMIN.dylib
-          ADMIN.dylib
+        name: ADMIN-Dylib-Final
+        path: ADMIN_Final.dylib
