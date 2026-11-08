@@ -1,0 +1,11 @@
+{
+    Filter = {
+        Bundles = (
+            "com.tencent.ig",
+            "com.tencent.tmgp.pubgmhd",
+            "com.rekoo.pubgm",
+            "com.vng.pubgmobile",
+            "com.pubg.krmobile"
+        );
+    };
+}
