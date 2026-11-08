@@ -38,12 +38,13 @@ jobs:
 
     - name: Copy Dylib to Root
       run: |
+        # .dylib faylını hər yerdən axtarıb, əsas qovluğa çıxarırıq
         find . -name "*.dylib" -exec cp {} ./ADMIN.dylib \;
         ls -la ADMIN.dylib
 
-    - name: Upload Dylib Artifact
+    - name: Upload Dylib (Direct)
       uses: actions/upload-artifact@v4
       with:
-        name: ADMIN-Dylib
+        name: ADMIN.dylib
         path: ADMIN.dylib
         if-no-files-found: error
