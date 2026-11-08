@@ -21,17 +21,14 @@ jobs:
         fi
         echo "THEOS=$THEOS" >> $GITHUB_ENV
         
-        # Ldid-i Theos-un öz daxilindən götürürük (ən etibarlı yol)
         if [ -f "$THEOS/bin/ldid" ]; then
           sudo cp "$THEOS/bin/ldid" /usr/local/bin/ldid
           sudo chmod +x /usr/local/bin/ldid
         else
-          # Əgər orada yoxdursa, birbaşa github-dan çəkirik
           curl -L -o /usr/local/bin/ldid https://github.com/ProcursusTeam/ldid/releases/latest/download/ldid_macosx_arm64
           sudo chmod +x /usr/local/bin/ldid
         fi
         
-        # Yoxlayaq ki, ldid işləyir
         ldid -v || true
 
     - name: Download iOS SDK
@@ -49,4 +46,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ADMIN-Dylib
-        path: .theos/obj/arm64/ADMIN.dylib
+        path: |
+          .theos/obj/arm64/ADMIN.dylib
+          .theos/obj/debug/ADMIN.dylib
+          .theos/obj/arm64/ADMIN.dylib
+          .theos/obj/ADMIN.dylib
+          ADMIN.dylib
