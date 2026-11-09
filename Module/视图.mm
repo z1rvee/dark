@@ -387,7 +387,7 @@
                 imDrawList->AddTextX(ImVec2(materialData.screen.x - calcTextSize(str.c_str(), 21) / 2, materialData.screen.y), ImColor(255, 0, 0), 21, str.c_str());
             }
         }
-    } // <-- 1-ci DÖVRÜN SONU
+    } 
 
     // ... 115-ci sətirdən sonrakı kodunuz buradan davam edir ...
         if (self.moduleControl->playerSwitch.M416) {
